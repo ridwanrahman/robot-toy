@@ -1,0 +1,8 @@
+RIGHT
+LEFT
+PLACE 0, 0, SOUTH
+MOVE
+report
+RIGHT
+right
+report
