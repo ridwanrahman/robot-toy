@@ -11,9 +11,24 @@ DIRECTIONS = ['NORTH', 'SOUTH', 'EAST', 'WEST']
 class UserInput:
 
     def __init__(self, file_name=None):
-        self.file_name = file_name
+        self._file_name = file_name
         self._command_list = []
-        self.open_and_read_file()
+
+    def get_file_name(self) -> str:
+        """
+        Get the name of the file
+        :return: str
+        """
+        return self._file_name
+
+    def set_file_name(self, file_name: str) -> None:
+        """
+        Set the file name which needs to be in txt format
+        :param file_name: str
+        """
+        if not file_name.endswith('.txt'):
+            raise Exception
+        self._file_name = file_name
 
     def get_command_list(self) -> list:
         return self._command_list
@@ -63,7 +78,7 @@ class UserInput:
                 return
             self.append_into_command_list(record)
 
-    def open_and_read_file(self):
+    def process_file_line(self, line):
         function_names = {
             'PLACE': self.handle_place,
             'MOVE': self.handle_move,
@@ -72,27 +87,29 @@ class UserInput:
             'RIGHT': self.handle_direction,
             '': self.handle_empty_line
         }
-        if self.file_name:
-            with open(self.file_name) as file:
-                for line in file:
-                    try:
-                        list_line_remove_list = line.rstrip('\n')
-                        list_line = list_line_remove_list.split(" ")
-                        first_word = list_line[0].upper()
-                        validated_record = function_names[first_word](list_line)
-                        if validated_record:
-                            self.list_append(validated_record)
-                        else:
-                            logger.warning(
-                                f"Error with {list_line_remove_list} command. Skipping as cannot execute."
-                            )
-                    except Exception as e:
-                        if isinstance(e, KeyError):
-                            logger.warning(f'Incorrect {list_line_remove_list} command')
-                        else:
-                            logger.warning(e)
+        try:
+            line = line.rstrip('\n')
+            list_line = line.split(" ")
+            first_word = list_line[0].upper()
+            validated_record = function_names[first_word](list_line)
+            if validated_record:
+                self.list_append(validated_record)
+        except Exception as e:
+            if isinstance(e, KeyError):
+                logger.warning(f'Incorrect {line} command')
+            else:
+                logger.warning(e)
 
+    def open_and_read_file(self):
+        try:
+            with open(self.get_file_name()) as file:
+                for line in file:
+                    self.process_file_line(line)
+        except FileNotFoundError:
+            logger.warning(f'File not found')
 
 
 if __name__ == '__main__':
-    user = UserInput('../resources/user_input.txt')
+    user = UserInput()
+    user.set_file_name('../resources/user_input.tt')
+    user.open_and_read_file()

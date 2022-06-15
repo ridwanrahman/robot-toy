@@ -1,7 +1,5 @@
-RIGHT
-LEFT
 PLACE 0, 0, SOUTH
-MOVE
+MOVEy
 report
 RIGHT
 right
