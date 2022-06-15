@@ -1,7 +1,7 @@
 import logging
 
 from typing import List
-from .errors import PlaceCommandError, EmptyCommandError
+from .errors import PlaceCommandError, EmptyCommandError, WrongCommandError
 
 logger = logging.getLogger(__name__)
 
@@ -53,22 +53,29 @@ class UserInput:
             raise PlaceCommandError("Error in place command. Please ensure format is PLACE X, Y, F")
 
     def handle_move(self, list_line) -> str:
+        if len(list_line) > 1:
+            raise WrongCommandError("Incorrect command")
         if list_line[0].upper() == 'MOVE':
             return str(list_line[0]).upper()
-        raise KeyError
+        else:
+            raise KeyError
 
     def handle_report(self, list_line) -> str:
+        if len(list_line) > 1:
+            raise WrongCommandError("Incorrect command")
         if list_line[0].upper() == 'REPORT':
             return str(list_line[0]).upper()
         raise KeyError
 
     def handle_direction(self, list_line) -> str:
+        if len(list_line) > 1:
+            raise WrongCommandError("Incorrect command")
         if list_line[0].upper() in ['LEFT', 'RIGHT']:
             return str(list_line[0]).upper()
         raise KeyError
 
     def handle_empty_line(self, list_line) -> bool:
-        raise EmptyCommandError("Remove remove empty line")
+        raise EmptyCommandError("Remove empty line")
 
     def list_append(self, record: List) -> None:
         if 'PLACE' in record:

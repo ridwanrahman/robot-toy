@@ -4,3 +4,7 @@ class PlaceCommandError(Exception):
 
 class EmptyCommandError(Exception):
     pass
+
+
+class WrongCommandError(Exception):
+    pass
