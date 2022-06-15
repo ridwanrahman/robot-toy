@@ -1,7 +1,6 @@
 import pytest
 import logging
 
-from toy_robot.errors import PlaceCommandError, EmptyCommandError
 from toy_robot.user_input import UserInput
 
 class TestPlaceCommand():

@@ -1,6 +1,10 @@
-PLACE 0, 0, SOUTH
-MOVEy
+PLACE 0, 4, EAST
+MOVE
+
+MOVE
+MOVE
+MOVE
 report
-RIGHT
-right
-report
+MOVE
+MOVE
+LEFT

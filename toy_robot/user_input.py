@@ -1,7 +1,7 @@
 import logging
 
 from typing import List
-from .errors import PlaceCommandError, EmptyCommandError, WrongCommandError
+from toy_robot.errors import PlaceCommandError, EmptyCommandError, WrongCommandError
 
 logger = logging.getLogger(__name__)
 
