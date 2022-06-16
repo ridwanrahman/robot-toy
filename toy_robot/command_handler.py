@@ -1,5 +1,7 @@
+import os
 import logging
 
+import utils
 from toy_robot.table_top import TableTop
 from toy_robot.robot import Robot
 from toy_robot.user_input import UserInput
@@ -80,9 +82,13 @@ class CommandHandler:
         """
         The main command handler method that takes in validated user commands then executes each command
         """
-        #
+        # Set the file name to user_input class
         self.user_input.set_file_name(self.get_file_name())
+
+        # calling the open_and_read_file() will read the file, validate the inputs and only the commands that appear
+        # after 'PLACE'
         self.user_input.open_and_read_file()
+        # load the validated list of commands
         validated_user_commands = self.user_input.get_command_list()
         if len(validated_user_commands) == 0:
             logging.warning("Command list is empty, Please place correct command according to documentation")
@@ -93,8 +99,11 @@ class CommandHandler:
 
 
 def main():
+    root_folder = utils.get_root_folder()
+    file_path = os.path.join(root_folder, 'resources/user_input.txt')
+
     command_handle_class = CommandHandler()
-    command_handle_class.file_name = '../resources/user_input.txt'
+    command_handle_class.set_file_name(file_path)
     command_handle_class.command_runner()
 
 if __name__ == '__main__':
