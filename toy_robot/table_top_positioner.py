@@ -1,6 +1,6 @@
 from utils import DirectionsEnum
 
-from robot import Robot
+from toy_robot.robot import Robot
 
 
 class Positioner:

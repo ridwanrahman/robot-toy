@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 
 class CommandHandler:
     def __init__(self):
+
         self.table_top = TableTop(
             length=TABLE_TOP_LENGTH,
             width=TABLE_TOP_WIDTH

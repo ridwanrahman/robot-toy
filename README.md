@@ -7,7 +7,7 @@ Pytest was used to write tests for this program. To turn the tests:
 
 To run coverage for the different classes:
 
-1. ``python -m coverage run tests/test_robot.py ``
+1. ``coverage run -m pytest tests/<include name of file>``
 
 2. ``coverage report``
 
