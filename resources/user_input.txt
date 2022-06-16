@@ -1,4 +1,7 @@
-place 2, 3, East
+move
+report
+place 4, 1, south
 right
+move
 move
 report
