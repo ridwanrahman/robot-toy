@@ -1,8 +1,4 @@
-move
-PLACE 1, 4, EAST
+place 2, 3, East
 right
-report
-move
 move
 report
-PLACE 6, 6, EAST

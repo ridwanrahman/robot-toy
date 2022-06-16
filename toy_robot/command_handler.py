@@ -52,7 +52,7 @@ class CommandHandler:
             self.robot.set_positions(
                 x=move_x,
                 y=move_y,
-                direction=DirectionsEnum[command[3]]
+                direction=DirectionsEnum[command[3].upper()]
             )
             logging.info(f"PLACE: the robot on position: {self.robot.current_position()}")
         else:
@@ -118,13 +118,13 @@ class CommandHandler:
             'REPORT': self.handle_report_command
         }
         if isinstance(command, list):
-            movement_command = command[0]
+            movement_command = command[0].upper()
             movements[movement_command](command)
         if isinstance(command, str):
             if self.robot.get_direction() is None:
                 # if the robot is not on the tabletop, all commands are ignored
                 return
-            movements[command]()
+            movements[command.upper()]()
 
     def command_runner(self):
         """
@@ -139,7 +139,7 @@ class CommandHandler:
         # load the validated list of commands
         validated_user_commands = self.user_input.get_command_list()
         if len(validated_user_commands) == 0:
-            logging.warning("Command list is empty, Please place correct command according to documentation")
+            # logging.warning("Incorrect command")
             exit()
         # loop through and execute each command
         for command in validated_user_commands:

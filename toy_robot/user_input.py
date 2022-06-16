@@ -35,6 +35,8 @@ class UserInput:
         """
         Return the command list
         """
+        # if len(self._command_list) == 0:
+        #     logging.warning("Commands aren't available")
         return self._command_list
 
     def append_into_command_list(self, command) -> None:
@@ -52,7 +54,7 @@ class UserInput:
         """
         validated_list = []
         try:
-            if list_line[0] == 'PLACE' and list_line[3] in DIRECTIONS:
+            if list_line[0].upper() == 'PLACE' and list_line[3].upper() in DIRECTIONS:
                 validated_list.append(list_line[0])
                 num1 = list_line[1].split(",")
                 num2 = list_line[2].split(",")
@@ -116,7 +118,7 @@ class UserInput:
         """
         Append into command_list list to create a list of commands.
         """
-        if 'PLACE' in record:
+        if 'PLACE' in record or 'place' in record:
             self.append_into_command_list(record)
         else:
             if not self.get_command_list():
