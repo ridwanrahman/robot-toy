@@ -1,5 +1,4 @@
 import os
-import pytest
 import logging
 import utils
 
@@ -11,6 +10,7 @@ class TestEndToEnd:
     def test_end_to_end_1(self, caplog):
         caplog.set_level(logging.INFO)
 
+        # Load the txt file
         root_folder = utils.get_root_folder()
         file_path = os.path.join(root_folder, 'resources/test_inputs/test_user_inputs_1.txt')
 
@@ -25,6 +25,7 @@ class TestEndToEnd:
     def test_end_to_end_2(self, caplog):
         caplog.set_level(logging.INFO)
 
+        # Load the txt file
         root_folder = utils.get_root_folder()
         file_path = os.path.join(root_folder, 'resources/test_inputs/test_user_inputs_2.txt')
 
