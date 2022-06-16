@@ -13,7 +13,6 @@ class Positioner:
     def position_updater(self, robot: Robot) -> tuple[int, int]:
         """
 
-
         :param robot: Robot
         :return: x: int, y: int
         """

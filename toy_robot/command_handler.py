@@ -5,22 +5,28 @@ from toy_robot.robot import Robot
 from toy_robot.user_input import UserInput
 from toy_robot.table_top_positioner import Positioner, DirectionsEnum
 
-logger = logging.getLogger(__name__)
 TABLE_TOP_LENGTH = 5
 TABLE_TOP_WIDTH = 5
-logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 
 class CommandHandler:
-    def __init__(self):
+    def __init__(self, file_name=None):
 
         self.table_top = TableTop(
             length=TABLE_TOP_LENGTH,
             width=TABLE_TOP_WIDTH
         )
+        self._file_name = file_name,
         self.user_input = UserInput()
         self.robot = Robot()
         self.table_top_positioner = Positioner()
+
+    def set_file_name(self, file_name):
+        self._file_name = file_name
+
+    def get_file_name(self):
+        return self._file_name
 
     def handle_place_command(self, command: list):
         move_x = command[1]
@@ -33,7 +39,7 @@ class CommandHandler:
                 direction=DirectionsEnum[command[3]]
             )
         else:
-            logger.warning(f'cannot move to coordinates: {move_x} {move_y} as it is outside tabletop')
+            logging.warning(f'cannot move to coordinates: {move_x} {move_y} as it is outside tabletop')
 
     def handle_move_command(self):
         move_x, move_y = self.table_top_positioner.position_updater(self.robot)
@@ -51,7 +57,7 @@ class CommandHandler:
         self.robot.set_direction(direction)
 
     def handle_report_command(self) -> None:
-        logger.debug(self.robot.current_position())
+        logging.info(self.robot.current_position())
 
     def execute_command(self, command):
         movements = {
@@ -75,11 +81,11 @@ class CommandHandler:
         The main command handler method that takes in validated user commands then executes each command
         """
         #
-        self.user_input.set_file_name('../resources/user_input.txt')
+        self.user_input.set_file_name(self.get_file_name())
         self.user_input.open_and_read_file()
         validated_user_commands = self.user_input.get_command_list()
         if len(validated_user_commands) == 0:
-            logger.warning("Command list is empty, Please place correct command according to documentation")
+            logging.warning("Command list is empty, Please place correct command according to documentation")
             exit()
         # loop through and execute each command
         for command in validated_user_commands:
@@ -88,6 +94,7 @@ class CommandHandler:
 
 def main():
     command_handle_class = CommandHandler()
+    command_handle_class.file_name = '../resources/user_input.txt'
     command_handle_class.command_runner()
 
 if __name__ == '__main__':

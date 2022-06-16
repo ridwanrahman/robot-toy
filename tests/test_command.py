@@ -60,7 +60,7 @@ class TestCommand:
         (['PLACE', 0, 0, 'NORTH'], "0, 0, NORTH"),
     ])
     def test_handle_report_command(self, caplog, test_input, expected):
-        caplog.set_level(logging.DEBUG)
+        caplog.set_level(logging.INFO)
         test_command = CommandHandler()
         test_command.handle_place_command(test_input)
         test_command.handle_report_command()

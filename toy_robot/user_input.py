@@ -118,5 +118,5 @@ class UserInput:
 
 if __name__ == '__main__':
     user = UserInput()
-    user.set_file_name('../resources/user_input.tt')
+    user.set_file_name('../resources/user_input.txt')
     user.open_and_read_file()
