@@ -5,6 +5,7 @@ from toy_robot.robot import Robot
 from toy_robot.user_input import UserInput
 from toy_robot.table_top_positioner import Positioner, DirectionsEnum
 
+logger = logging.getLogger(__name__)
 TABLE_TOP_LENGTH = 5
 TABLE_TOP_WIDTH = 5
 logger = logging.getLogger(__name__)
@@ -50,7 +51,7 @@ class CommandHandler:
         self.robot.set_direction(direction)
 
     def handle_report_command(self) -> None:
-        print(self.robot.current_position())
+        logger.debug(self.robot.current_position())
 
     def execute_command(self, command):
         movements = {

@@ -34,7 +34,7 @@ class Robot:
         Returns the current position of the robot
         :return: tuple (x: int, y: int, direction: enum)
         """
-        return self._x, self._y, self._direction.name
+        return f"{self._x}, {self._y}, {self._direction.name}"
 
     def set_positions(self, x: int, y: int,
                       direction: DirectionsEnum) -> None:
