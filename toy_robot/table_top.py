@@ -13,9 +13,19 @@ class TableTop:
         self._width = width
 
     def get_length(self) -> int:
+        """
+        Returns length of the table top
+
+        :return: int
+        """
         return self._length
 
     def get_width(self) -> int:
+        """
+        Returns the width of the table top
+
+        :return: int
+        """
         return self._width
 
     def get_table_top_dimensions(self) -> tuple:
