@@ -1,6 +1,5 @@
 PLACE 0, 4, EAST
 MOVE
-
 MOVE
 MOVE
 MOVE
@@ -8,3 +7,4 @@ report
 MOVE
 MOVE
 LEFT
+report
