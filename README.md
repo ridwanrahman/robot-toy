@@ -17,9 +17,13 @@ Pycharm will create either a virtualenv/ anaconda env.
 4. Open the `runner.py` file and run it.
 5. Some movement results should show up on the terminal.
 
-## Implementation
+## Implementation 
+A few sample data and output is provided below.
+
 1. This app was built with the idea of modularity and reusability in mind.
-2. To run, please start with some basic commands in `resources/user_input.txt`. Let's say we begin with
+2. To run, please run the `toy_robot/runner.py` with some basic commands in `resources/user_input.txt`. 
+
+Let's say we begin with
 the following:
 ```
 PLACE 0, 0, NORTH
@@ -59,6 +63,15 @@ ERROR: Incorrect command: not-move
 COMMANDS: ['PLACE', 1, 0, 'NORTH'], 'LEFT', 'RIGHT', 'REPORT'
 ------------------------------- 
 OUTPUT : 1, 0, NORTH
+```
+
+4. Only putting the below command in `user_input.txt`:
+```
+command
+```
+would result in error message would result in error message:
+```
+ERROR: Incorrect command: command
 ```
 
 ## Testing
