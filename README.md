@@ -14,8 +14,12 @@ This app is the implementation of the toy robot challenge.
 2. Open the project in pycharm. 
 Pycharm will create either a virtualenv/ anaconda env.
 3. run `pip install -r requirements.txt` to install the requirements.
-4. Open the `runner.py` file and run it.
+4. Open the `toy_robot/runner.py` file and run it. It has a main function
+and it loads user data from `resources/user_input.txt` and runs them.
 5. Some movement results should show up on the terminal.
+6. To run the tests, run: `python -m pytest -s tests`
+7. Coverage has been included, please see instructions below to run the 
+coverage.
 
 ## Implementation 
 A few sample data and output is provided below.
@@ -23,28 +27,27 @@ A few sample data and output is provided below.
 1. This app was built with the idea of modularity and reusability in mind.
 2. To run, please run the `toy_robot/runner.py` with some basic commands in `resources/user_input.txt`. 
 
-Let's say we begin with
-the following:
+Let's say we begin with  the following user inputs (Copy below commands
+to `resources/user_input.txt`):
 ```
 PLACE 0, 0, NORTH
 MOVE
 LEFT
-RIGHT
+LEFT
 REPORT
 ```
-The result of the command above would be:
 
-Explanation: The commands to be executed are written inside `COMMANDS:` with
-the place command in a list, as it a long command. The other commands are 
-one worded command.
+Explanation (of the output): The commands to be executed are written inside `COMMANDS:` with
+the place command in a list (as it a long command). The other commands are 
+one worded commands.
 
 The `REPORT` command outputs the `OUTPUT:` which is the current location of the 
-robot when report is executed.
+robot when report is executed. Output of the command above is below:
 ```
 -------------------------------
-COMMANDS: ['PLACE', 0, 0, 'NORTH'], 'MOVE', 'LEFT', 'RIGHT', 'REPORT'
+COMMANDS: ['PLACE', 0, 0, 'NORTH'], 'MOVE', 'LEFT', 'LEFT', 'REPORT'
 ------------------------------- 
-OUTPUT : 0, 1, NORTH
+OUTPUT : 0, 1, SOUTH
 ```
 The structure of the terminal output shows each command and its result.
 3. In the below command, there is a wrong command on line 2 as below:
@@ -73,6 +76,25 @@ would result in error message would result in error message:
 ```
 ERROR: Incorrect command: command
 ```
+5. The below command has some commands before PLACE:
+```
+move
+report
+left
+PLACE 1, 0, NORTH
+LEFT
+LEFT
+REPORT
+```
+The command handle will ignore the commands before PLACE and the output shows:
+```
+-------------------------------
+COMMANDS: ['PLACE', 1, 0, 'NORTH'], 'LEFT', 'LEFT', 'REPORT'
+------------------------------- 
+OUTPUT : 1, 0, SOUTH
+```
+
+
 
 ## Testing
 

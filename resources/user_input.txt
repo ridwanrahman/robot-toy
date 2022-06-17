@@ -1,13 +1,7 @@
-PLACE 0, 0, NORTH
-MOVE
-LEFT
+move
 report
 left
-report
-move
-right
-right
-move
-report
-RIGHT
+PLACE 1, 0, NORTH
+LEFT
+LEFT
 REPORT
