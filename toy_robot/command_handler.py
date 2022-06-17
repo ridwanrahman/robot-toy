@@ -1,5 +1,7 @@
 import logging
 
+from typing import Union
+
 from toy_robot.table_top import TableTop
 from toy_robot.robot import Robot
 from toy_robot.user_input import UserInput
@@ -25,7 +27,7 @@ class CommandHandler:
         self.robot = Robot()
         self.table_top_positioner = Positioner()
 
-    def set_file_path(self, file_path) -> None:
+    def set_file_path(self, file_path: str) -> None:
         """
          Sets the value of the file path
         """
@@ -54,7 +56,6 @@ class CommandHandler:
                 y=move_y,
                 direction=DirectionsEnum[command[3].upper()]
             )
-            # logging.info(f"RESULT : Placed robot on position: {self.robot.current_position()}")
         else:
             logging.warning(f'ERROR: cannot move to coordinates: {move_x} {move_y} as it is outside tabletop')
 
@@ -71,8 +72,6 @@ class CommandHandler:
         if can_move:
             self.robot.set_x(move_x)
             self.robot.set_y(move_y)
-        # else:
-        #     logging.info(f"(!) Ignoring move command. Skipping this 'MOVE'")
 
     def handle_left_command(self) -> None:
         """
@@ -102,8 +101,7 @@ class CommandHandler:
         """
         logging.info(f"OUTPUT : {self.robot.current_position()}")
 
-    def execute_command(self, command: list) -> None:
-        #TODO: change this hint
+    def execute_command(self, command: Union[str, list]) -> None:
         """
         This function will load the handle function according to the command.
         A Place command will run the `handle_place_command` function,
@@ -112,22 +110,21 @@ class CommandHandler:
         :param command: List
         """
         movements = {
-            # 'PLACE': self.handle_place_command,
             'MOVE': self.handle_move_command,
             'LEFT': self.handle_left_command,
             'RIGHT': self.handle_right_command,
             'REPORT': self.handle_report_command
         }
+
+        # PLACE command will come in a list which will be handled below
         if isinstance(command, list):
-            # movement_command = command[0].upper()
-            # logging.info(f"COMMAND: {command}")
             self.handle_place_command(command)
-            # movements[movement_command](command)
+
+        # For any other commands, which come as a single string are handled here
         if isinstance(command, str):
             if self.robot.get_direction() is None:
                 # if the robot is not on the tabletop, all commands are ignored
                 return
-            # logging.info(f"COMMAND: {command}")
             movements[command.upper()]()
 
     def print_commands(self, user_commands):
@@ -147,11 +144,12 @@ class CommandHandler:
         validated_user_commands = self.user_input.get_command_list()
 
         if len(validated_user_commands) == 0:
-            # logging.warning("Incorrect command")
             exit()
-        # loop through and execute each command
+
         logging.info(f"-------------------------------")
         self.print_commands(validated_user_commands)
         logging.info(f"------------------------------- ")
+
+        # loop through and execute each command
         for command in validated_user_commands:
             self.execute_command(command)

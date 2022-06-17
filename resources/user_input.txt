@@ -1,5 +1,13 @@
 PLACE 0, 0, NORTH
 MOVE
 LEFT
+report
+left
+report
+move
+right
+right
+move
+report
 RIGHT
 REPORT

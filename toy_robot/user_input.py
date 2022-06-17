@@ -79,7 +79,7 @@ class UserInput:
         else:
             raise KeyError
 
-    def handle_report(self, list_line) -> str:
+    def handle_report(self, list_line: list) -> str:
         """
         Handles the 'REPORT' command
         :param list_line: str
@@ -112,7 +112,7 @@ class UserInput:
         """
         raise EmptyCommandError("ERROR: Empty line present in input file")
 
-    def list_append(self, record: List) -> None:
+    def list_append(self, record: Union[str, list]) -> None:
         """
         Append into command_list list to create a list of commands.
         """
