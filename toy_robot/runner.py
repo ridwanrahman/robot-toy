@@ -23,7 +23,7 @@ class Runner:
         file_path = os.path.join(root_folder, FILE_PATH)
 
         command_handle_class = CommandHandler()
-        command_handle_class.set_file_name(file_path)
+        command_handle_class.set_file_path(file_path)
         command_handle_class.command_runner()
 
 

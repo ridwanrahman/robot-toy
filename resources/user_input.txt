@@ -1,7 +1,1 @@
-move
-report
-place 4, 1, south
-right
-move
-move
-report
+LEFT 0, 0, NORTHEAST

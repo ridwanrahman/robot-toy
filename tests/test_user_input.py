@@ -3,7 +3,8 @@ import logging
 
 from toy_robot.user_input import UserInput
 
-class TestPlaceCommand():
+
+class TestPlaceCommand:
 
     @pytest.mark.parametrize("test_input, expected", [
         ('PLACE 0, 0, NORTH\n', ['PLACE', 0, 0, 'NORTH']),
@@ -28,24 +29,25 @@ class TestPlaceCommand():
         user_input = UserInput()
         user_input.process_file_line(test_input)
         assert (
-            "Error in place command. Please ensure format is PLACE X, Y, F"
+            "ERROR: Please ensure format is PLACE X, Y, F, as program starts after PLACE command"
             in str(caplog.records)
         )
 
-    @pytest.mark.parametrize("test_input", [
-        'MOVE 0, 0, NORTHEAST\n',
-        'REPORT 0, 0, NORTHEAST\n',
-        'LEFT 0, 0, NORTHEAST\n',
-        'RIGHT 0, 0, NORTHEAST\n',
+    @pytest.mark.parametrize("test_input, expected", [
+        ('MOVE 0, 0, NORTHEAST\n', 'ERROR: Incorrect MOVE command provided in input file'),
+        ('REPORT 0, 0, NORTHEAST\n', 'ERROR: Incorrect REPORT command provided in input file'),
+        ('LEFT 0, 0, NORTHEAST\n', 'ERROR: Incorrect LEFT/RIGHT command provided in input file'),
+        ('RIGHT 0, 0, NORTHEAST\n', 'ERROR: Incorrect LEFT/RIGHT command provided in input file'),
     ])
-    def test_incorrect_place_command(self, caplog, test_input):
+    def test_incorrect_place_command(self, caplog, test_input, expected):
         caplog.set_level(logging.DEBUG)
         user_input = UserInput()
         user_input.process_file_line(test_input)
         assert (
-                f"Incorrect command"
+                expected
                 in str(caplog.records)
         )
+
 
 class TestMoveCommand:
 

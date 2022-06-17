@@ -15,27 +15,27 @@ class CommandHandler:
     """
     Class to handle the user commands on the toy robot.
     """
-    def __init__(self, file_name=None):
+    def __init__(self, file_path=None):
         self.table_top = TableTop(
             length=TABLE_TOP_LENGTH,
             width=TABLE_TOP_WIDTH
         )
-        self._file_name = file_name,
+        self._file_path = file_path,
         self.user_input = UserInput()
         self.robot = Robot()
         self.table_top_positioner = Positioner()
 
-    def set_file_name(self, file_name) -> None:
+    def set_file_path(self, file_path) -> None:
         """
          Sets the value of the file path
         """
-        self._file_name = file_name
+        self._file_path = file_path
 
-    def get_file_name(self) -> str:
+    def get_file_path(self) -> str:
         """
         Returns the file path
         """
-        return self._file_name
+        return self._file_path
 
     def handle_place_command(self, command: list) -> None:
         """
@@ -54,9 +54,9 @@ class CommandHandler:
                 y=move_y,
                 direction=DirectionsEnum[command[3].upper()]
             )
-            logging.info(f"PLACE: the robot on position: {self.robot.current_position()}")
+            # logging.info(f"RESULT : Placed robot on position: {self.robot.current_position()}")
         else:
-            logging.warning(f'cannot move to coordinates: {move_x} {move_y} as it is outside tabletop')
+            logging.warning(f'ERROR: cannot move to coordinates: {move_x} {move_y} as it is outside tabletop')
 
     def handle_move_command(self) -> None:
         """
@@ -71,8 +71,8 @@ class CommandHandler:
         if can_move:
             self.robot.set_x(move_x)
             self.robot.set_y(move_y)
-        else:
-            logging.info(f'Robot will go overboard with this move, current: {self.robot.current_position()}')
+        # else:
+        #     logging.info(f"(!) Ignoring move command. Skipping this 'MOVE'")
 
     def handle_left_command(self) -> None:
         """
@@ -100,9 +100,10 @@ class CommandHandler:
         """
         Logs out the current robot position
         """
-        logging.info(f"MOVED: {self.robot.current_position()}")
+        logging.info(f"OUTPUT : {self.robot.current_position()}")
 
     def execute_command(self, command: list) -> None:
+        #TODO: change this hint
         """
         This function will load the handle function according to the command.
         A Place command will run the `handle_place_command` function,
@@ -111,36 +112,46 @@ class CommandHandler:
         :param command: List
         """
         movements = {
-            'PLACE': self.handle_place_command,
+            # 'PLACE': self.handle_place_command,
             'MOVE': self.handle_move_command,
             'LEFT': self.handle_left_command,
             'RIGHT': self.handle_right_command,
             'REPORT': self.handle_report_command
         }
         if isinstance(command, list):
-            movement_command = command[0].upper()
-            movements[movement_command](command)
+            # movement_command = command[0].upper()
+            # logging.info(f"COMMAND: {command}")
+            self.handle_place_command(command)
+            # movements[movement_command](command)
         if isinstance(command, str):
             if self.robot.get_direction() is None:
                 # if the robot is not on the tabletop, all commands are ignored
                 return
+            # logging.info(f"COMMAND: {command}")
             movements[command.upper()]()
+
+    def print_commands(self, user_commands):
+        logging.info(f"COMMANDS: {str(user_commands)[1:-1]}")
 
     def command_runner(self):
         """
         The main command handler method that takes in validated user commands then executes each command
         """
         # Set the file name to user_input class
-        self.user_input.set_file_name(self.get_file_name())
+        self.user_input.set_file_name(self.get_file_path())
 
         # calling the open_and_read_file() will read the file, validate the inputs and only the commands that appear
         # after 'PLACE'
         self.user_input.open_and_read_file()
         # load the validated list of commands
         validated_user_commands = self.user_input.get_command_list()
+
         if len(validated_user_commands) == 0:
             # logging.warning("Incorrect command")
             exit()
         # loop through and execute each command
+        logging.info(f"-------------------------------")
+        self.print_commands(validated_user_commands)
+        logging.info(f"------------------------------- ")
         for command in validated_user_commands:
             self.execute_command(command)

@@ -1,9 +1,9 @@
 import logging
 
-from typing import List
+from typing import List, Optional, Union
 from toy_robot.errors import PlaceCommandError, EmptyCommandError, WrongCommandError
 
-logger = logging.getLogger(__name__)
+logging.basicConfig(format='%(message)s', level=logging.INFO)
 DIRECTIONS = ['NORTH', 'SOUTH', 'EAST', 'WEST']
 
 
@@ -35,8 +35,6 @@ class UserInput:
         """
         Return the command list
         """
-        # if len(self._command_list) == 0:
-        #     logging.warning("Commands aren't available")
         return self._command_list
 
     def append_into_command_list(self, command) -> None:
@@ -63,11 +61,11 @@ class UserInput:
                 validated_list.append(list_line[3])
                 return validated_list
             else:
-                raise PlaceCommandError("Error in place command. Please ensure format is PLACE X, Y, F")
+                raise PlaceCommandError("ERROR: Please ensure format is PLACE X, Y, F, as program starts after PLACE command")
         except Exception as pl:
-            raise PlaceCommandError("Error in place command. Please ensure format is PLACE X, Y, F")
+            raise PlaceCommandError("ERROR: Please ensure format is PLACE X, Y, F, as program starts after PLACE command")
 
-    def handle_move(self, list_line: str) -> str:
+    def handle_move(self, list_line: list) -> str:
         """
         Handles the 'MOVE' command
 
@@ -75,7 +73,7 @@ class UserInput:
         :return: str
         """
         if len(list_line) > 1:
-            raise WrongCommandError("Incorrect command")
+            raise WrongCommandError("ERROR: Incorrect MOVE command provided in input file")
         if list_line[0].upper() == 'MOVE':
             return str(list_line[0]).upper()
         else:
@@ -88,12 +86,12 @@ class UserInput:
         :return: str
         """
         if len(list_line) > 1:
-            raise WrongCommandError("Incorrect command")
+            raise WrongCommandError("ERROR: Incorrect REPORT command provided in input file")
         if list_line[0].upper() == 'REPORT':
             return str(list_line[0]).upper()
         raise KeyError
 
-    def handle_direction(self, list_line: str) -> str:
+    def handle_direction(self, list_line: list) -> str:
         """
         Handles if the direction is either LEFT/RIGHT
 
@@ -101,7 +99,7 @@ class UserInput:
         :return: str
         """
         if len(list_line) > 1:
-            raise WrongCommandError("Incorrect command")
+            raise WrongCommandError("ERROR: Incorrect LEFT/RIGHT command provided in input file")
         if list_line[0].upper() in ['LEFT', 'RIGHT']:
             return str(list_line[0]).upper()
         raise KeyError
@@ -112,7 +110,7 @@ class UserInput:
 
         :param list_line: str
         """
-        raise EmptyCommandError("Remove empty line")
+        raise EmptyCommandError("ERROR: Empty line present in input file")
 
     def list_append(self, record: List) -> None:
         """
@@ -125,13 +123,13 @@ class UserInput:
                 return
             self.append_into_command_list(record)
 
-    def process_file_line(self, line: str) -> None:
+    def process_file_line(self, line: Union[str, list]) -> None:
         """
         Process the command according to the first command in each line
 
         :param line: str
         """
-        function_names = {
+        validation_handlers = {
             'PLACE': self.handle_place,
             'MOVE': self.handle_move,
             'REPORT': self.handle_report,
@@ -143,14 +141,14 @@ class UserInput:
             line = line.rstrip('\n')
             list_line = line.split(" ")
             first_word = list_line[0].upper()
-            validated_record = function_names[first_word](list_line)
+            validated_record = validation_handlers[first_word](list_line)
             if validated_record:
                 self.list_append(validated_record)
         except Exception as e:
             if isinstance(e, KeyError):
-                logger.warning(f'Incorrect {line} command')
+                logging.warning(f'ERROR: Incorrect command: {line}')
             else:
-                logger.warning(e)
+                logging.warning(e)
 
     def open_and_read_file(self) -> None:
         """
@@ -162,4 +160,4 @@ class UserInput:
                 for line in file:
                     self.process_file_line(line)
         except FileNotFoundError:
-            logger.warning(f'File not found')
+            logging.warning(f'File not found')

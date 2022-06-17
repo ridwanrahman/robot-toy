@@ -17,6 +17,50 @@ Pycharm will create either a virtualenv/ anaconda env.
 4. Open the `runner.py` file and run it.
 5. Some movement results should show up on the terminal.
 
+## Implementation
+1. This app was built with the idea of modularity and reusability in mind.
+2. To run, please start with some basic commands in `resources/user_input.txt`. Let's say we begin with
+the following:
+```
+PLACE 0, 0, F
+MOVE
+LEFT
+RIGHT
+REPORT
+```
+The result of the command above would be:
+```
+-------------------------
+COMMAND: PLACE
+RESULT : Placed robot on position: 0, 0, NORTH
+COMMAND: MOVE
+COMMAND: LEFT
+COMMAND: RIGHT
+COMMAND: REPORT
+RESULT : 0, 1, NORTH
+```
+The structure of the terminal output shows each command and its result.
+3. In the below command, there is a wrong command on line 2 as below:
+```
+PLACE 1, 0, NORTH
+not-move
+LEFT
+RIGHT
+REPORT
+```
+The terminal output would show the errors at first then the output of the program
+as below:
+```
+ERROR: Incorrect command: not-move
+-------------------------
+COMMAND: PLACE
+RESULT : Placed robot on position: 1, 0, NORTH
+COMMAND: LEFT
+COMMAND: RIGHT
+COMMAND: REPORT
+RESULT : 1, 0, NORTH
+```
+
 ## Testing
 
 Pytest was used to write tests for this program. To run the tests: 
@@ -62,6 +106,7 @@ To get a coverage report, please run:
     └── requirements.txt
     └── utils
 ```
+## 
 1. The toy_robot folder holds all the classes for the robot challenge.
    1. Running the runner class will load the `user_input.txt` from the resources
    folder in the root directory. (This app was written in mac and not tested in windows).
