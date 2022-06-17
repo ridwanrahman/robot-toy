@@ -22,22 +22,25 @@ Pycharm will create either a virtualenv/ anaconda env.
 2. To run, please start with some basic commands in `resources/user_input.txt`. Let's say we begin with
 the following:
 ```
-PLACE 0, 0, F
+PLACE 0, 0, NORTH
 MOVE
 LEFT
 RIGHT
 REPORT
 ```
 The result of the command above would be:
+
+Explanation: The commands to be executed are written inside `COMMANDS:` with
+the place command in a list, as it a long command. The other commands are 
+one worded command.
+
+The `REPORT` command outputs the `OUTPUT:` which is the current location of the 
+robot when report is executed.
 ```
--------------------------
-COMMAND: PLACE
-RESULT : Placed robot on position: 0, 0, NORTH
-COMMAND: MOVE
-COMMAND: LEFT
-COMMAND: RIGHT
-COMMAND: REPORT
-RESULT : 0, 1, NORTH
+-------------------------------
+COMMANDS: ['PLACE', 0, 0, 'NORTH'], 'MOVE', 'LEFT', 'RIGHT', 'REPORT'
+------------------------------- 
+OUTPUT : 0, 1, NORTH
 ```
 The structure of the terminal output shows each command and its result.
 3. In the below command, there is a wrong command on line 2 as below:
@@ -48,17 +51,14 @@ LEFT
 RIGHT
 REPORT
 ```
-The terminal output would show the errors at first then the output of the program
-as below:
+The terminal output would show the errors at first. Then show the output of the program
+as below including the `COMMANDS:` that get executed:
 ```
 ERROR: Incorrect command: not-move
--------------------------
-COMMAND: PLACE
-RESULT : Placed robot on position: 1, 0, NORTH
-COMMAND: LEFT
-COMMAND: RIGHT
-COMMAND: REPORT
-RESULT : 1, 0, NORTH
+-------------------------------
+COMMANDS: ['PLACE', 1, 0, 'NORTH'], 'LEFT', 'RIGHT', 'REPORT'
+------------------------------- 
+OUTPUT : 1, 0, NORTH
 ```
 
 ## Testing

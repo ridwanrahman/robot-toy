@@ -48,6 +48,18 @@ class TestPlaceCommand:
                 in str(caplog.records)
         )
 
+    @pytest.mark.parametrize("test_input, expected", [
+        ('abcdef', 'ERROR: Incorrect command: abcdef'),
+    ])
+    def test_incorrect_command(self, caplog, test_input, expected):
+        caplog.set_level(logging.DEBUG)
+        user_input = UserInput()
+        user_input.process_file_line(test_input)
+        assert (
+            expected
+            in str(caplog.records)
+        )
+
 
 class TestMoveCommand:
 
