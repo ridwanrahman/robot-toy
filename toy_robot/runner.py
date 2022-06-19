@@ -14,8 +14,10 @@ class Runner:
     Please run this file to start the app
 
     Class to inject the path of the file and start the app
+
+    N.B test not included for this class as it only runs the program
     """
-    def run_robot_app(self):
+    def run_robot_app(self) -> None:
         """
         Creates the CommandHandler class and calls teh command_runner() function
         """
