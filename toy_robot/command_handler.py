@@ -127,7 +127,12 @@ class CommandHandler:
                 return
             movements[command.upper()]()
 
-    def print_commands(self, user_commands):
+    def print_commands(self, user_commands: list) -> None:
+        """
+        Print the 'COMMANDS' section on the output
+
+        :param user_commands: list
+        """
         logging.info(f"COMMANDS: {str(user_commands)[1:-1]}")
 
     def command_runner(self):

@@ -6,6 +6,9 @@ from toy_robot.table_top import TableTop
 class TestTableTop:
 
     def test_tabletop(self):
+        """
+        Check if the table top gets initialized
+        """
         test_length = 5
         test_width = 5
         test_table_top = TableTop(

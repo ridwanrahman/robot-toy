@@ -34,6 +34,12 @@ class TestPositioner:
         ([0, 0, DirectionsEnum.WEST], DirectionsEnum.SOUTH),
     ])
     def test_handle_left(self, test_input, expected):
+        """
+        Test the positioner class's handle_left_turn method.
+        The input data will turn towards its left direction
+
+        E.g. NORTH -> TURN LEFT -> WEST
+        """
         test_robot = Robot()
         test_robot.set_positions(test_input[0], test_input[1], test_input[2])
 
@@ -48,6 +54,12 @@ class TestPositioner:
         ([0, 0, DirectionsEnum.WEST], DirectionsEnum.NORTH),
     ])
     def test_handle_right(self, test_input, expected):
+        """
+        Test the positioner class's handle_right_turn method.
+        The input data will turn towards its right direction
+
+        E.g. NORTH -> TURN RIGHT -> EAST
+        """
         test_robot = Robot()
         test_robot.set_positions(test_input[0], test_input[1], test_input[2])
 

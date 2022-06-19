@@ -5,6 +5,9 @@ from toy_robot.user_input import UserInput
 
 
 class TestPlaceCommand:
+    """
+    Test the UserInput class
+    """
 
     @pytest.mark.parametrize("test_input, expected", [
         ('PLACE 0, 0, NORTH\n', ['PLACE', 0, 0, 'NORTH']),
@@ -12,6 +15,10 @@ class TestPlaceCommand:
         ('PLACE 3, 4, SOUTH\n', ['PLACE', 3, 4, 'SOUTH'])
     ])
     def test_correct_place_command(self, test_input, expected):
+        """
+        Functions in UserInput() class take care of each type of input
+        The hanndle function takes care of 'PLACE' command
+        """
         list_line = test_input.rstrip('\n').split(" ")
         user_input = UserInput()
         result = user_input.handle_place(list_line)
@@ -40,6 +47,9 @@ class TestPlaceCommand:
         ('RIGHT 0, 0, NORTHEAST\n', 'ERROR: Incorrect LEFT/RIGHT command provided in input file'),
     ])
     def test_incorrect_place_command(self, caplog, test_input, expected):
+        """
+        Testing incorrect data
+        """
         caplog.set_level(logging.DEBUG)
         user_input = UserInput()
         user_input.process_file_line(test_input)
@@ -52,6 +62,9 @@ class TestPlaceCommand:
         ('abcdef', 'ERROR: Incorrect command: abcdef'),
     ])
     def test_incorrect_command(self, caplog, test_input, expected):
+        """
+        Testing incorrect commands
+        """
         caplog.set_level(logging.DEBUG)
         user_input = UserInput()
         user_input.process_file_line(test_input)

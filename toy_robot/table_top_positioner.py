@@ -46,12 +46,12 @@ class Positioner:
             move_y = robot.get_y()
         return move_x, move_y
 
-    def handle_left_turn(self, robot: Robot):
+    def handle_left_turn(self, robot: Robot) -> DirectionsEnum:
         # To turn left, decrement the value and mod with 4
         calculation = (robot.get_direction().value - 1) % 4
         return DirectionsEnum(calculation)
 
-    def handle_right_turn(self, robot: Robot):
+    def handle_right_turn(self, robot: Robot) -> DirectionsEnum:
         # To turn right, increment the value and mod with 4
         calculation = (robot.get_direction().value + 1) % 4
         return DirectionsEnum(calculation)

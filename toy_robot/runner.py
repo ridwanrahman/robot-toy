@@ -19,11 +19,16 @@ class Runner:
         """
         Creates the CommandHandler class and calls teh command_runner() function
         """
+        # Get the root folder of the project and append the path to the resource folder
         root_folder = get_root_folder()
         file_path = os.path.join(root_folder, FILE_PATH)
 
+        # Create a CommandHandler class
         command_handle_class = CommandHandler()
+        # inject the path of the file to command handler class which in turn
+        # will inject to the UserInput() class
         command_handle_class.set_file_path(file_path)
+        # run the command handler class to read the input, validate, and move the robot
         command_handle_class.command_runner()
 
 

@@ -4,4 +4,5 @@ left
 PLACE 1, 0, NORTH
 LEFT
 LEFT
+move
 REPORT

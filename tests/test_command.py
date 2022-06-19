@@ -33,6 +33,10 @@ class TestCommand:
         (['PLACE', 1, 1, 'SOUTH'], 'MOVE', [1, 0, DirectionsEnum.SOUTH]),
     ])
     def test_move_commands(self, initial, test_input, expected):
+        """
+        Test with initial data and check to see if the robot has moved to the
+        expected direction
+        """
         test_command = CommandHandler()
         test_command.execute_command(initial)
         test_command.execute_command(test_input)
@@ -60,6 +64,9 @@ class TestCommand:
         (['PLACE', 0, 0, 'NORTH'], "0, 0, NORTH"),
     ])
     def test_handle_report_command(self, caplog, test_input, expected):
+        """
+        Testing the REPORT command to check if the right output is shown
+        """
         caplog.set_level(logging.INFO)
         test_command = CommandHandler()
         test_command.handle_place_command(test_input)
