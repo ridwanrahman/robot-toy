@@ -15,9 +15,8 @@ class TestEndToEnd:
 
     def test_end_to_end_1(self, caplog):
         """
-
-        :param caplog:
-        :return:
+        Direct the file path to the test file and initialize CommandHandler() with the
+        test inputs and then assert with the output
         """
         caplog.set_level(logging.INFO)
 
@@ -34,6 +33,10 @@ class TestEndToEnd:
         )
 
     def test_end_to_end_2(self, caplog):
+        """
+        Direct the file path to the test file and initialize CommandHandler() with the
+        test inputs and then assert with the output
+        """
         caplog.set_level(logging.INFO)
 
         # Load the txt file
