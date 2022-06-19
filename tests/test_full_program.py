@@ -6,11 +6,22 @@ from toy_robot.command_handler import CommandHandler
 
 
 class TestEndToEnd:
+    """
+    This test class will test the whole program from start to end.
+
+    The program starts from runner class which calls CommandHandler. The tests
+    provided here also call CommandHandler and inject file path
+    """
 
     def test_end_to_end_1(self, caplog):
+        """
+
+        :param caplog:
+        :return:
+        """
         caplog.set_level(logging.INFO)
 
-        # Load the txt file
+        # Load the test txt file
         root_folder = utils.get_root_folder()
         file_path = os.path.join(root_folder, 'resources/test_inputs/test_user_inputs_1.txt')
 
