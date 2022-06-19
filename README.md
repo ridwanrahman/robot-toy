@@ -7,7 +7,7 @@ This app is the implementation of the toy robot challenge.
 1. Pycharm (Vscode can be used too but the virtualenv setup can be different)
 2. python 3.9
 3. pytest
-4. pytest-cov
+4. coverage
 
 ## Setup Instructions
 1. Clone from git
